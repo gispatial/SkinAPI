@@ -1,0 +1,73 @@
+﻿'user strict';
+var sql = require('./newdb.js');
+var url = require('url');
+var helper = require('./helper');
+//{modelName} object constructor
+var {modelName} = function(req,{tableName}){
+    {propertyList}
+};
+{modelName}.create = function (req,new{modelName}, result) {    
+        sql.query("{insertQuery}",new{modelName}, function (err, res) {
+                
+                if(err) {
+                    console.log("error: ", err);
+                    result(err, null);
+                }
+                else{
+                    console.log(res.insertId);
+                    result(null, res.insertId);
+                }
+            });           
+};
+{modelName}.getById = function (req,id, result) {
+        sql.query("{selectByIdQuery}", id, function (err, res) {             
+                if(err) {
+                    console.log("error: ", err);
+                    result(err, null);
+                }
+                else{
+                    result(null, res);
+              
+                }
+            });   
+};
+{modelName}.getAll = function (req,result) {
+        sql.query("{selectAllQuery}", function (err, res) {
+
+                if(err) {
+                    console.log("error: ", err);
+                    result(null, err);
+                }
+                else{
+                  console.log('{tableName} : ', res);  
+
+                 result(null, res);
+                }
+            });   
+};
+{modelName}.updateById = function(req,id, {tableName}, result){
+  sql.query("{updateQuery}",{updateParameter}, function (err, res) {
+          if(err) {
+              console.log("error: ", err);
+                result(null, err);
+             }
+           else{   
+             result(null, res);
+                }
+            }); 
+};
+{modelName}.remove = function(req,id, result){
+     sql.query("{deleteQuery}",[id], function (err, res) {
+
+                if(err) {
+                    console.log("error: ", err);
+                    result(null, err);
+                }
+                else{
+               
+                 result(null, res);
+                }
+            }); 
+};
+
+module.exports= {modelName};
